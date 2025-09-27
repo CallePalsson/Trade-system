@@ -12,7 +12,7 @@ public class User
         Username = username;
         Password = password;
     }
-    public void ShowCurrentUser()
+    public void Currentuser()
     {
         Console.WriteLine(Username);
     }

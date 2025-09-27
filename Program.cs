@@ -21,8 +21,8 @@ List<User> users = new List<User>();
 List<Item> items = new List<Item>();
 
 //Dictionary to store a complete advertisment
-Dictionary<Item, User> tradecenter = new Dictionary<Item, User>(); 
-
+Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
+User? CurrentUser = null;
 users.Add(new User("a" , "a"));
 bool running = true;
 
@@ -51,7 +51,7 @@ while (running)
                 {
                     ActiveUser = true;
                 }
-                string CurrentUser = user.Username;
+                CurrentUser = user;
             }
 
             break;
@@ -83,7 +83,12 @@ while (running)
                 string? item = Console.ReadLine();
                 Console.Write("A short description of that item: ");
                 string? description = Console.ReadLine();
-                items.Add(new Item(item, description));
+                Item localitem = new Item(item, description);
+                tradecenter.Add(localitem,CurrentUser);
+                foreach (var obj in tradecenter)
+                {
+                    Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
+                }
                 
                 
                 // foreach (var i in items)
