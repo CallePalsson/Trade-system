@@ -6,7 +6,9 @@ using App;
 // A user needs to be able to register an account !!
 // A user needs to be able to log out.!!
 // A user needs to be able to log in.!!
+
 // A user needs to be able to upload information about the item they wish to trade.
+
 // A user needs to be able to browse a list of other users items.
 // A user needs to be able to request a trade for other users items.
 // A user needs to be able to browse trade requests.
@@ -14,16 +16,19 @@ using App;
 // A user needs to be able to deny a trade request.
 // A user needs to be able to browse completed requests.
 List<User> users = new List<User>();
-List<Item> tradecenter = new List<Item>();
+List<Item> items = new List<Item>();
+Dictionary<Item, User> tradecenter = new Dictionary<Item, User>(); 
 
-
-users.Add(new User("Calle" , "123"));
+users.Add(new User("a" , "a"));
 
 bool running = true;
 
 while (running)
 {
-
+    foreach (var user in users)
+    {
+        Console.WriteLine(user.Username);
+    }
     bool ActiveUser = false;
     Console.WriteLine($"Welcome to tradecenter!\n\n");
     Console.WriteLine("1. Login");
@@ -68,6 +73,17 @@ while (running)
                 Console.ReadLine();
                 break;
             case "2":
+                Console.Write("What item type of item would you like to add: ");
+                string? item = Console.ReadLine();
+                Console.Write("A short description of that item: ");
+                string? description = Console.ReadLine();
+                items.Add(new Item(item, description));
+                // foreach (var i in items)
+                // {
+                //     Console.WriteLine(i.Name);
+                //     Console.WriteLine($"Description\n{i.Description}");
+                    
+                // }
                 break;
         }
 

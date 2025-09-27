@@ -5,7 +5,7 @@ namespace App;
 public class User
 {
     public string Username;
-     string Password;
+    string Password;
 
     public User(string username, string password)
     {
