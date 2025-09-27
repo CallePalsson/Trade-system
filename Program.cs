@@ -7,10 +7,10 @@ using App;
 // A user needs to be able to log out.!!
 // A user needs to be able to log in.!!
 // A user needs to be able to upload information about the item they wish to trade. !!
-
-// A user needs to be able to browse a list of other users items.
+// A user needs to be able to browse a list of other users items.!!
 
 // A user needs to be able to request a trade for other users items.
+
 // A user needs to be able to browse trade requests.
 // A user needs to be able to accept a trade request.
 // A user needs to be able to deny a trade request.
@@ -24,9 +24,9 @@ List<Item> items = new List<Item>();
 Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
 User? CurrentUser = null;
 users.Add(new User("a" , "a"));
-bool running = true;
+bool Running = true;
 
-while (running)
+while (Running)
 {
     bool ActiveUser = false; //ActiveUser false becuase no one is logged in
 
@@ -103,7 +103,26 @@ while (running)
                 {
                     Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
                 }
-                Console.Write("\nEnter to countinue...");
+                Console.WriteLine("Enter the Listing id to inspect:");
+                Console.WriteLine("To quit enter q");
+                string userinput = Console.ReadLine();
+                if (userinput == "q")
+                {
+                    break;
+                }
+                else
+                {
+                    int userinputindex = Convert.ToInt32(userinput);
+                    foreach (var listing in tradecenter)
+                    {
+                        if (userinputindex == listing.Key.Id)
+                        {
+                            Console.WriteLine($"Item: {listing.Key.Name}");
+                            Console.WriteLine($"Descritpion\n{listing.Key.Description}");
+                        }
+                    }
+                }
+                    Console.Write("\nEnter to countinue...");
                 Console.ReadLine();
                 break;
         }
