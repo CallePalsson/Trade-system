@@ -66,7 +66,7 @@ while (running)
     while (ActiveUser)
     {
 
-        Console.WriteLine("Logged in as: ");
+        Console.WriteLine($"Logged in as: {CurrentUser.Username}");
         Console.WriteLine("--------------------Tradecenter------------------");
         Console.WriteLine("1. Logout");
         Console.WriteLine("2. Add a item to tradecenter");
@@ -84,19 +84,27 @@ while (running)
                 Console.Write("A short description of that item: ");
                 string? description = Console.ReadLine();
                 Item localitem = new Item(item, description);
-                tradecenter.Add(localitem,CurrentUser);
-                foreach (var obj in tradecenter)
-                {
-                    Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
-                }
-                
-                
+                tradecenter.Add(localitem, CurrentUser);
+
+
+
                 // foreach (var i in items)
                 // {
                 //     Console.WriteLine(i.Name);
                 //     Console.WriteLine($"Description\n{i.Description}");
 
                 // }
+                break;
+
+            case "3":
+                Console.Clear();
+                Console.WriteLine("----------------Tradecenter-------------------");
+                foreach (var obj in tradecenter)
+                {
+                    Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
+                }
+                Console.Write("\nEnter to countinue...");
+                Console.ReadLine();
                 break;
         }
 
