@@ -14,4 +14,8 @@ public class Item
         Name = name;
         Description = description;
     }
+    // public static void ShowItem(string Name,int Id,TradeStatus status)
+    // {
+    //     Console.WriteLine($"Id: ({Id}) Item: ({Name}) Status: ({status})");
+    // }
 }

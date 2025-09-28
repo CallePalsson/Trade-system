@@ -50,8 +50,10 @@ while (Running)
                 if (user.Trylogin(L_username, L_password) == true)
                 {
                     ActiveUser = true;
+                    CurrentUser = user;
+                    break;
                 }
-                CurrentUser = user;
+                
             }
 
             break;
@@ -71,10 +73,12 @@ while (Running)
         Console.WriteLine("1. Logout");
         Console.WriteLine("2. Add a item to tradecenter");
         Console.WriteLine("3. Browse the tradecenter");
+        Console.WriteLine("4. Browse your listings");
         switch (Console.ReadLine())
         {
             case "1":
                 ActiveUser = false;
+                CurrentUser = null;
                 Console.WriteLine("Logging out!");
                 Console.ReadLine();
                 break;
@@ -101,7 +105,14 @@ while (Running)
                 Console.WriteLine("----------------Tradecenter-------------------");
                 foreach (var obj in tradecenter)
                 {
-                    Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
+                    if (CurrentUser.Username == obj.Value.Username)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
+                    }
                 }
                 Console.WriteLine("Enter the Listing id to inspect:");
                 Console.WriteLine("To quit enter q");
@@ -133,10 +144,23 @@ while (Running)
                             }
                         }
                     }
+                    break;
                 }
-                    Console.Write("\nEnter to countinue...");
-                Console.ReadLine();
+            case "4":
+                Console.WriteLine("----------------Your Listings-------------------");
+                foreach (var listing in tradecenter)
+                {
+                    if (listing.Value.Username == CurrentUser.Username)
+                    {
+                        Console.WriteLine($"Id: {listing.Key.Id} Item: {listing.Key.Name} Status: {listing.Key.status}");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 break;
+
         }
 
 
