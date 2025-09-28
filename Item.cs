@@ -6,11 +6,12 @@ public class Item
     public int Id;
     public string Name;
     public string Description;
+    public TradeStatus status;
 
     public Item(string name, string description)
     {
         Id = IdCount++;
         Name = name;
-        Description = description; 
+        Description = description;
     }
 }

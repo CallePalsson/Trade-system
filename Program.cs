@@ -117,8 +117,20 @@ while (Running)
                     {
                         if (userinputindex == listing.Key.Id)
                         {
-                            Console.WriteLine($"Item: {listing.Key.Name}");
+                            Console.WriteLine($"({listing.Key.Name})");
                             Console.WriteLine($"Descritpion\n{listing.Key.Description}");
+                            Console.WriteLine("\n\n1.Send trade offer\n2.Back");
+
+                            switch (Console.ReadLine())
+                            {
+                                case "1":
+                                    Console.WriteLine("Trade offer pending!");
+                                    listing.Key.status = TradeStatus.Pending;
+                                    //listing.Value.Username = CurrentUser.Username;
+                                    break;
+                                case "2":
+                                    break;
+                            }
                         }
                     }
                 }
