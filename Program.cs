@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Transactions;
 using App;
@@ -51,7 +52,7 @@ while (Running)
                 {
                     ActiveUser = true;
                     CurrentUser = user;
-                    break;
+                    break; 
                 }
                 
             }
@@ -80,7 +81,6 @@ while (Running)
                 ActiveUser = false;
                 CurrentUser = null;
                 Console.WriteLine("Logging out!");
-                Console.ReadLine();
                 break;
             case "2":
                 Console.Write("What item type of item would you like to add: ");
@@ -107,7 +107,7 @@ while (Running)
                 {
                     if (CurrentUser.Username == obj.Value.Username)
                     {
-                        break;
+                        continue;
                     }
                     else
                     {
@@ -128,9 +128,18 @@ while (Running)
                     {
                         if (userinputindex == listing.Key.Id)
                         {
-                            Console.WriteLine($"({listing.Key.Name})");
-                            Console.WriteLine($"Descritpion\n{listing.Key.Description}");
-                            Console.WriteLine("\n\n1.Send trade offer\n2.Back");
+                            if (CurrentUser.Username == listing.Value.Username)
+                            {
+                                Console.WriteLine("There is no listing with that id!");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"({listing.Key.Name})");
+                                Console.WriteLine($"Descritpion\n{listing.Key.Description}");
+                                Console.WriteLine("\n\n1.Send trade offer\n2.Back");      
+                            }
+                            
 
                             switch (Console.ReadLine())
                             {
@@ -156,7 +165,7 @@ while (Running)
                     }
                     else
                     {
-                        break;
+                        continue;
                     }
                 }
                 break;
