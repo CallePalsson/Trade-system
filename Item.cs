@@ -7,6 +7,7 @@ public class Item
     public string Name;
     public string Description;
     public TradeStatus status;
+    public string TradeRequest;
 
     public Item(string name, string description)
     {
@@ -19,3 +20,5 @@ public class Item
     //     Console.WriteLine($"Id: ({Id}) Item: ({Name}) Status: ({status})");
     // }
 }
+
+

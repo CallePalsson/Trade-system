@@ -4,18 +4,20 @@ using System.Runtime.CompilerServices;
 using System.Transactions;
 using App;
 
-// A user needs to be able to register an account !!
-// A user needs to be able to log out.!!
-// A user needs to be able to log in.!!
+// A user needs to be able to register an account                                   !!
+// A user needs to be able to log out.                                              !!
+// A user needs to be able to log in.                                               !!
 // A user needs to be able to upload information about the item they wish to trade. !!
-// A user needs to be able to browse a list of other users items.!!
-
-// A user needs to be able to request a trade for other users items.
+// A user needs to be able to browse a list of other users items.                   !!
+// A user needs to be able to request a trade for other users items.                !
 
 // A user needs to be able to browse trade requests.
+
 // A user needs to be able to accept a trade request.
 // A user needs to be able to deny a trade request.
 // A user needs to be able to browse completed requests.
+//Program needs to be able to save trades
+//program needs to be able to save users
 
 //List of users and items to store users inputs
 List<User> users = new List<User>();
@@ -24,7 +26,7 @@ List<Item> items = new List<Item>();
 //Dictionary to store a complete advertisment
 Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
 User? CurrentUser = null;
-users.Add(new User("a" , "a"));
+users.Add(new User("a", "a"));
 bool Running = true;
 
 while (Running)
@@ -32,7 +34,7 @@ while (Running)
     bool ActiveUser = false; //ActiveUser false becuase no one is logged in
 
     //Menu for login options
-    Console.WriteLine($"Welcome to tradecenter!\n\n");
+    Console.WriteLine($"Welcome to tradecenter!\n");
     Console.WriteLine("1. Login");
     Console.WriteLine("2. Create a account");
     switch (Console.ReadLine())
@@ -43,7 +45,7 @@ while (Running)
             string? L_username = Console.ReadLine();
             Console.Write("Enter password: ");
             string? L_password = Console.ReadLine();
-            
+
             //Looping through users list and checking if there is a user with the users inputs
             foreach (var user in users)
             {
@@ -52,9 +54,9 @@ while (Running)
                 {
                     ActiveUser = true;
                     CurrentUser = user;
-                    break; 
+                    break;
                 }
-                
+
             }
 
             break;
@@ -103,15 +105,15 @@ while (Running)
             case "3":
                 Console.Clear();
                 Console.WriteLine("----------------Tradecenter-------------------");
-                foreach (var obj in tradecenter)
+                foreach (var listings in tradecenter)
                 {
-                    if (CurrentUser.Username == obj.Value.Username)
+                    if (CurrentUser.Username == listings.Value.Username)
                     {
                         continue;
                     }
                     else
                     {
-                        Console.WriteLine($"Item: {obj.Key.Name} Item Id: {obj.Key.Id}  Trader: {obj.Value.Username} ");
+                        Console.WriteLine($"Listing Id: {listings.Key.Id}  Item: {listings.Key.Name} Trader: {listings.Value.Username} ");
                     }
                 }
                 Console.WriteLine("Enter the Listing id to inspect:");
@@ -137,16 +139,16 @@ while (Running)
                             {
                                 Console.WriteLine($"({listing.Key.Name})");
                                 Console.WriteLine($"Descritpion\n{listing.Key.Description}");
-                                Console.WriteLine("\n\n1.Send trade offer\n2.Back");      
+                                Console.WriteLine("\n\n1.Send trade offer\n2.Back");
                             }
-                            
+
 
                             switch (Console.ReadLine())
                             {
                                 case "1":
-                                    Console.WriteLine("Trade offer pending!");
-                                    listing.Key.status = TradeStatus.Pending;
-                                    //listing.Value.Username = CurrentUser.Username;
+                                    Console.WriteLine("Trade offer sent!");
+                                    listing.Key.status = TradeStatus.Requested;
+                                    listing.Key.TradeRequest = CurrentUser.Username;
                                     break;
                                 case "2":
                                     break;
@@ -162,6 +164,10 @@ while (Running)
                     if (listing.Value.Username == CurrentUser.Username)
                     {
                         Console.WriteLine($"Id: {listing.Key.Id} Item: {listing.Key.Name} Status: {listing.Key.status}");
+                        if (listing.Key.status == TradeStatus.Requested)
+                        {
+                            Console.WriteLine($"Trade request sent by {listing.Key.TradeRequest}");
+                        }
                     }
                     else
                     {
