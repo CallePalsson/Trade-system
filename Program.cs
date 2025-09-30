@@ -22,6 +22,7 @@ using App;
 //List of users and items to store users inputs
 List<User> users = new List<User>();
 List<Item> items = new List<Item>();
+List<Item> traderequests = new List<Item>();
 
 //Dictionary to store a complete advertisment
 Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
