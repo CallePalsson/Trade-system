@@ -8,12 +8,19 @@ public class Item
     public string Description;
     public TradeStatus status;
     public string TradeRequest;
+    public User Owner;
 
-    public Item(string name, string description)
+    public Item(string name, string description, User CurrentUser)
     {
         Id = IdCount++;
         Name = name;
         Description = description;
+        Owner = CurrentUser;
+
+    }
+    public bool IsOwner(User user)
+    {
+        return Owner == user;
     }
     // public static void ShowItem(string Name,int Id,TradeStatus status)
     // {
