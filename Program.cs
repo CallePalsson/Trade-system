@@ -92,7 +92,7 @@ while (Running)
                 string? item = Console.ReadLine();
                 Console.Write("A short description of that item: ");
                 string? description = Console.ReadLine();
-                Item localitem = new Item(item, description);
+                Item localitem = new Item(item, description, CurrentUser);
                 trade.tradecenter.Add(localitem, CurrentUser);
                 break;
 
