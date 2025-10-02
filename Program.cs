@@ -22,10 +22,9 @@ using App;
 //List of users and items to store users inputs
 List<User> users = new List<User>();
 List<Item> items = new List<Item>();
-List<Item> traderequests = new List<Item>();
+Trade trade = new Trade();
 
 //Dictionary to store a complete advertisment
-Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
 User? CurrentUser = null;
 users.Add(new User("a", "a"));
 bool Running = true;
@@ -69,7 +68,7 @@ while (Running)
             users.Add(new User(username, password));
             break;
     }
-    while (ActiveUser)
+    while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
     {
 
         Console.WriteLine($"Logged in as: {CurrentUser.Username}");
@@ -80,43 +79,23 @@ while (Running)
         Console.WriteLine("4. Browse your listings");
         switch (Console.ReadLine())
         {
-            case "1":
+            case "1": //---------------------------Logout------------------------------
                 ActiveUser = false;
                 CurrentUser = null;
                 Console.WriteLine("Logging out!");
                 break;
-            case "2":
+
+            case "2": //---------------------------Add Item------------------------------
                 Console.Write("What item type of item would you like to add: ");
                 string? item = Console.ReadLine();
                 Console.Write("A short description of that item: ");
                 string? description = Console.ReadLine();
                 Item localitem = new Item(item, description);
-                tradecenter.Add(localitem, CurrentUser);
-
-
-
-                // foreach (var i in items)
-                // {
-                //     Console.WriteLine(i.Name);
-                //     Console.WriteLine($"Description\n{i.Description}");
-
-                // }
+                trade.tradecenter.Add(localitem, CurrentUser);
                 break;
 
-            case "3":
-                Console.Clear();
-                Console.WriteLine("----------------Tradecenter-------------------");
-                foreach (var listings in tradecenter)
-                {
-                    if (CurrentUser.Username == listings.Value.Username)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Listing Id: {listings.Key.Id}  Item: {listings.Key.Name} Trader: {listings.Value.Username} ");
-                    }
-                }
+            case "3": //---------------------------Browse Tradecenter------------------------------
+                trade.ShowTradecenter(CurrentUser);
                 Console.WriteLine("Enter the Listing id to inspect:");
                 Console.WriteLine("To quit enter q");
                 string userinput = Console.ReadLine();
@@ -126,66 +105,16 @@ while (Running)
                 }
                 else
                 {
-                    int userinputindex = Convert.ToInt32(userinput);
-                    foreach (var listing in tradecenter)
-                    {
-                        if (userinputindex == listing.Key.Id)
-                        {
-                            if (CurrentUser.Username == listing.Value.Username)
-                            {
-                                Console.WriteLine("There is no listing with that id!");
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine($"({listing.Key.Name})");
-                                Console.WriteLine($"Descritpion\n{listing.Key.Description}");
-                                Console.WriteLine("\n\n1.Send trade offer\n2.Back");
-                            }
-
-
-                            switch (Console.ReadLine())
-                            {
-                                case "1":
-                                    Console.WriteLine("Trade offer sent!");
-                                    listing.Key.status = TradeStatus.Requested;
-                                    listing.Key.TradeRequest = CurrentUser.Username;
-                                    break;
-                                case "2":
-                                    break;
-                            }
-                        }
-                    }
-                    break;
-                }
-            case "4":
-                Console.WriteLine("----------------Your Listings-------------------");
-                foreach (var listing in tradecenter)
-                {
-                    if (listing.Value.Username == CurrentUser.Username)
-                    {
-                        Console.WriteLine($"Id: {listing.Key.Id} Item: {listing.Key.Name} Status: {listing.Key.status}");
-                        if (listing.Key.status == TradeStatus.Requested)
-                        {
-                            Console.WriteLine($"Trade request sent by {listing.Key.TradeRequest}");
-                        }
-                    }
-                    else
-                    {
-                        continue;
-                    }
+                    trade.InspectListing(CurrentUser, userinput);
                 }
                 break;
 
+            case "4": //---------------------------Browse Own Listings------------------------------
+                trade.ShowUserListing(CurrentUser);
+                break;
         }
-
 
     }
 
-    // foreach (var user in users)
-    // {
-    //     Console.WriteLine(user.Username);
-    // }
-
-
 }
+
