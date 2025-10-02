@@ -9,11 +9,12 @@ using App;
 // A user needs to be able to log in.                                               !!
 // A user needs to be able to upload information about the item they wish to trade. !!
 // A user needs to be able to browse a list of other users items.                   !!
-// A user needs to be able to request a trade for other users items.                !
+// A user needs to be able to request a trade for other users items.                !!
 
-// A user needs to be able to browse trade requests.
+// A user needs to be able to browse trade requests.!
 
 // A user needs to be able to accept a trade request.
+
 // A user needs to be able to deny a trade request.
 // A user needs to be able to browse completed requests.
 //Program needs to be able to save trades
@@ -22,7 +23,8 @@ using App;
 //List of users and items to store users inputs
 List<User> users = new List<User>();
 List<Item> items = new List<Item>();
-List<Item> traderequests = new List<Item>();
+List<Trade> traderequests = new List<Trade>();
+Trade trade = new Trade();
 
 //Dictionary to store a complete advertisment
 Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
@@ -81,9 +83,7 @@ while (Running)
         switch (Console.ReadLine())
         {
             case "1":
-                ActiveUser = false;
-                CurrentUser = null;
-                Console.WriteLine("Logging out!");
+                CurrentUser.Logout(ActiveUser, CurrentUser);
                 break;
             case "2":
                 Console.Write("What item type of item would you like to add: ");
@@ -105,18 +105,8 @@ while (Running)
 
             case "3":
                 Console.Clear();
-                Console.WriteLine("----------------Tradecenter-------------------");
-                foreach (var listings in tradecenter)
-                {
-                    if (CurrentUser.Username == listings.Value.Username)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Listing Id: {listings.Key.Id}  Item: {listings.Key.Name} Trader: {listings.Value.Username} ");
-                    }
-                }
+                trade.ShowTradecenter(tradecenter, CurrentUser);
+
                 Console.WriteLine("Enter the Listing id to inspect:");
                 Console.WriteLine("To quit enter q");
                 string userinput = Console.ReadLine();
@@ -159,24 +149,40 @@ while (Running)
                     break;
                 }
             case "4":
-                Console.WriteLine("----------------Your Listings-------------------");
-                foreach (var listing in tradecenter)
-                {
-                    if (listing.Value.Username == CurrentUser.Username)
-                    {
-                        Console.WriteLine($"Id: {listing.Key.Id} Item: {listing.Key.Name} Status: {listing.Key.status}");
-                        if (listing.Key.status == TradeStatus.Requested)
-                        {
-                            Console.WriteLine($"Trade request sent by {listing.Key.TradeRequest}");
-                        }
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
+                trade.ShowUserItems(tradecenter, CurrentUser);
+                Console.ReadLine();
+                trade.ShowRequestedItems(tradecenter, CurrentUser);
                 break;
 
+
+
+                /*
+                                        Console.WriteLine("----------------Your Listings-------------------");
+                                        foreach (var listing in tradecenter)
+                                        {
+                                            if (listing.Value.Username == CurrentUser.Username)
+                                            {
+                                                Console.WriteLine($"Id: {listing.Key.Id} Item: {listing.Key.Name} Status: {listing.Key.status}");
+                                                if (listing.Key.status == TradeStatus.Requested)
+                                                {
+                                                    Console.WriteLine($"----------------Your Requests-------------------");
+                                                    foreach (var trade in tradecenter)
+                                                    {
+                                                        Console.WriteLine($"Id: {trade.Key.Id} Item: {trade.Key.Name} Requested by: {trade.Key.TradeRequest}");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                        break;
+                        */
         }
 
 

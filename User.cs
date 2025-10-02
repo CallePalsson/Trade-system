@@ -12,13 +12,15 @@ public class User
         Username = username;
         Password = password;
     }
-    public void Currentuser()
-    {
-        Console.WriteLine(Username);
-    }
     public bool Trylogin(string username, string password)
     {
         return username == Username && password == Password;
 
+    }
+    public void Logout(bool ActiveUser, User CurrentUser)
+    {
+        ActiveUser = false;
+        CurrentUser = null;
+        Console.WriteLine("Logging out!");
     }
 }
