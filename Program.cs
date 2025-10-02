@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Transactions;
@@ -77,6 +78,7 @@ while (Running)
         Console.WriteLine("2. Add a item to tradecenter");
         Console.WriteLine("3. Browse the tradecenter");
         Console.WriteLine("4. Browse your listings");
+        Console.WriteLine("5. Browse trade offers");
         switch (Console.ReadLine())
         {
             case "1": //---------------------------Logout------------------------------
@@ -111,6 +113,14 @@ while (Running)
 
             case "4": //---------------------------Browse Own Listings------------------------------
                 trade.ShowUserListing(CurrentUser);
+                break;
+            case "5":
+                trade.ShowTradeOffer(CurrentUser);
+                Console.WriteLine("Enter id of the item you would want to inspect:");
+                Console.WriteLine("q to Exit");
+                string userinputinspect = Console.ReadLine();
+                int userinputinspectid = Convert.ToInt32(userinputinspect);
+
                 break;
         }
 

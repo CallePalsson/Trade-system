@@ -46,11 +46,11 @@ public class Trade
     }
     public void ShowTradeOffer(User CurrentUser)
     {
-        Console.WriteLine("----------------Trade Requests-------------------");
+        Console.WriteLine("----------------Trade Offers-------------------");
         foreach (var listing in tradecenter)
         {
 
-            if (listing.Key.status == TradeStatus.Requested && CurrentUser.Username != listing.Value.Username)
+            if (listing.Key.status == TradeStatus.Requested && CurrentUser.Username == listing.Value.Username)
             {
                 Console.WriteLine($"Id: {listing.Key.Id} ({listing.Key.Name}) Trade request sent by {listing.Key.TradeRequest}");
             }
@@ -88,9 +88,7 @@ public class Trade
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        Console.WriteLine("Trade offer sent!");
-                        listing.Key.status = TradeStatus.Requested;
-                        listing.Key.TradeRequest = CurrentUser.Username;
+                        SendTradeOffer(listing.Key, CurrentUser);
                         break;
                     case "2":
                         break;
@@ -100,13 +98,31 @@ public class Trade
         }
 
     }
-    public void SendTradeOffer()
+    public void SendTradeOffer(Item item, User CurrentUser)
     {
-
+        Console.WriteLine("Trade offer sent!");
+        item.status = TradeStatus.Requested;
+        item.TradeRequest = CurrentUser.Username;
     }
 
-    public void AcceptTradeOffer()
+    public void AcceptTradeOffer(Item item, Dictionary<Item, User> tradecenter, User CurrentUser)
     {
+        //Console.WriteLine("Trade offer Accepted!");
+
+        item.status = TradeStatus.Approved;
+
+        item.TradeRequest = CurrentUser.Username;
+
+
+        tradecenter[item] = CurrentUser;
+        Console.WriteLine("trade approved!");
+
+        /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)
+        {
+            item.Username = CurrentUser.Username;
+            Console.WriteLine("Trade Approved");
+        }
+*/
 
     }
 
