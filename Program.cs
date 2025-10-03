@@ -14,10 +14,10 @@ using App;
 // A user needs to be able to browse a list of other users items.                   !!
 // A user needs to be able to request a trade for other users items.                !!
 // A user needs to be able to browse trade requests.                                !!
-
 // A user needs to be able to accept a trade request.                               !!
-// A user needs to be able to deny a trade request.
+// A user needs to be able to deny a trade request                                  !!
 // A user needs to be able to browse completed requests.                            !!
+
 //Program needs to be able to save trades
 //program needs to be able to save users
 
@@ -151,6 +151,7 @@ while (Running)
                                     trade.AcceptTradeOffer(it.Key, trade.tradecenter);
                                     break;
                                 case "2":
+                                    trade.DenyTradeOffer(it.Key);
                                     break;
                             }
 
@@ -164,7 +165,7 @@ while (Running)
                 foreach (var trades in trade.completedtrades)
                 {
                     if (trades.Owner == CurrentUser || trades.Lastowner == CurrentUser)
-                        Console.WriteLine($"Item: {trades.Name} Currentowner: {trades.Owner.Username} last owner: {trades.Lastowner.Username}");
+                        Console.WriteLine($"Item: ({trades.Name}) Trader: {trades.Owner.Username} Requested by: {trades.TradeRequest.Username}  ({trades.status})");
                     Console.ReadLine();
                     break;
                 }

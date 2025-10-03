@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography.X509Certificates;
 
 namespace App;
@@ -123,7 +124,7 @@ public class Trade
         tradecenter.Remove(item);
         Console.WriteLine("item deleted from tradecenter");
         completedtrades.Add(item);
-        Console.WriteLine($"Item added to yours and {item.Owner.Username} completed trades");
+        Console.WriteLine($"Item added to yours and {item.Owner.Username} trades history");
         Console.ReadLine();
 
         /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)
@@ -137,8 +138,10 @@ public class Trade
 
 
 
-    public void DenyTradeOffer()
+    public void DenyTradeOffer(Item item)
     {
-
+        item.status = TradeStatus.Denied;
+        Console.WriteLine("Trade offer denied and will be put up on tradecenter again!");
+        item.status = TradeStatus.Waiting;
     }
 }
