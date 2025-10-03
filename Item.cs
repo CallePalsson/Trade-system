@@ -7,7 +7,7 @@ public class Item
     public string Name;
     public string Description;
     public TradeStatus status;
-    public string TradeRequest;
+    public User TradeRequest;
     public User Owner;
 
     public Item(string name, string description, User CurrentUser)

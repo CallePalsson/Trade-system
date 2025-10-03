@@ -34,7 +34,7 @@ bool Running = true;
 while (Running)
 {
     bool ActiveUser = false; //ActiveUser false becuase no one is logged in
-    Console.Clear();
+    ////Console.Clear();();();
     //Menu for login options
     Console.WriteLine($"Welcome to tradecenter!\n");
     Console.WriteLine("1. Login");
@@ -43,7 +43,7 @@ while (Running)
     {
         //Asking the user for login information 
         case "1":
-            Console.Clear();
+            ////Console.Clear();();();
             Console.Write("Enter username: ");
             string? L_username = Console.ReadLine();
             Console.Write("Enter password: ");
@@ -64,7 +64,7 @@ while (Running)
 
             break;
         case "2":
-            Console.Clear();
+            ////Console.Clear();();();
             Console.Write("Enter username: ");
             string? username = Console.ReadLine();
             Console.Write("Enter password: ");
@@ -75,7 +75,7 @@ while (Running)
 
     while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
     {
-        Console.Clear();
+        ////Console.Clear();();();
         Console.WriteLine($"Logged in as: {CurrentUser.Username}");
         Console.WriteLine("--------------------Tradecenter------------------");
         Console.WriteLine("1. Logout");
@@ -93,7 +93,7 @@ while (Running)
                 break;
 
             case "2": //---------------------------Add Item------------------------------
-                Console.Clear();
+                ////Console.Clear();();();
                 Console.WriteLine("-------------------Add Item---------------------");
                 Console.Write("What item type of item would you like to add: ");
                 string? item = Console.ReadLine();
@@ -104,7 +104,7 @@ while (Running)
                 break;
 
             case "3": //---------------------------Browse Tradecenter------------------------------
-                Console.Clear();
+                ////Console.Clear();();();
                 trade.ShowTradecenter(CurrentUser);
                 Console.WriteLine("Enter the Listing id to inspect:");
                 Console.WriteLine("To quit enter q");
@@ -125,7 +125,7 @@ while (Running)
                 break;
 
             case "5": //----------------------------Browse Tradeoffers------------------------------
-                Console.Clear();
+                ////Console.Clear();();();
                 trade.ShowTradeOffer(CurrentUser);
                 Console.WriteLine("Inspect the request by Entering id: ");
                 Console.WriteLine("q to Exit");
@@ -146,7 +146,7 @@ while (Running)
                             {
                                 case "1":
                                     Console.WriteLine("Accepting Trade!");
-                                    trade.AcceptTradeOffer(it.Key, trade.tradecenter, CurrentUser);
+                                    trade.AcceptTradeOffer(it.Key, trade.tradecenter);
                                     break;
                                 case "2":
                                     break;

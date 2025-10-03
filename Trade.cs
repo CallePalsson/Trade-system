@@ -35,9 +35,9 @@ public class Trade
     {
         Console.WriteLine("----------------Your Listings-------------------");
         foreach (var listing in tradecenter)
-            if (CurrentUser.Username == listing.Value.Username)
+            if (CurrentUser == listing.Key.Owner)
             {
-                Console.WriteLine($"Listing Id: {listing.Key.Id}  Item: {listing.Key.Name} Trader: {listing.Value.Username} ");
+                Console.WriteLine($"Listing Id: {listing.Key.Id}  Item: {listing.Key.Name} Trader: {listing.Key.Owner.Username} ");
             }
             else
             {
@@ -52,7 +52,7 @@ public class Trade
 
             if (listing.Key.status == TradeStatus.Requested && CurrentUser.Username == listing.Value.Username)
             {
-                Console.WriteLine($"Id: {listing.Key.Id} ({listing.Key.Name}) Trade request sent by {listing.Key.TradeRequest}");
+                Console.WriteLine($"Id: {listing.Key.Id} ({listing.Key.Name}) Trade request sent by {listing.Key.TradeRequest.Username}");
             }
 
             else
@@ -102,21 +102,23 @@ public class Trade
     {
         Console.WriteLine("Trade offer sent!");
         item.status = TradeStatus.Requested;
-        item.TradeRequest = CurrentUser.Username;
+        item.TradeRequest = CurrentUser;
     }
 
-    public void AcceptTradeOffer(Item item, Dictionary<Item, User> tradecenter, User CurrentUser)
+    public void AcceptTradeOffer(Item item, Dictionary<Item, User> tradecenter)
     {
         //Console.WriteLine("Trade offer Accepted!");
 
         item.status = TradeStatus.Approved;
 
-        item.TradeRequest = CurrentUser.Username;
+        item.Owner = item.TradeRequest;
 
 
-        tradecenter[item] = CurrentUser;
+        tradecenter[item] = item.Owner;
         item.status = TradeStatus.Approved;
+        Console.WriteLine($"{item.Owner.Username} + {item.Name} + {item.TradeRequest.Username} + {item.status}");
         Console.WriteLine("trade approved!");
+        Console.ReadLine();
 
         /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)
         {
