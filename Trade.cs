@@ -1,3 +1,4 @@
+
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography.X509Certificates;
 
@@ -5,6 +6,7 @@ namespace App;
 
 public class Trade
 {
+
     public Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
     public List<Item> completedtrades = new List<Item>();
 
@@ -144,4 +146,5 @@ public class Trade
         Console.WriteLine("Trade offer denied and will be put up on tradecenter again!");
         item.status = TradeStatus.Waiting;
     }
+
 }
