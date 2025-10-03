@@ -5,7 +5,7 @@ namespace App;
 public class Trade
 {
     public Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
-    public List<Item> traderequests = new List<Item>();
+    public List<Item> completedtrades = new List<Item>();
 
 
     public void TradecenterAdd(Item item, User user)
@@ -111,13 +111,19 @@ public class Trade
 
         item.status = TradeStatus.Approved;
 
+        User lastowner = item.Owner;
         item.Owner = item.TradeRequest;
+
 
 
         tradecenter[item] = item.Owner;
         item.status = TradeStatus.Approved;
         Console.WriteLine($"{item.Owner.Username} + {item.Name} + {item.TradeRequest.Username} + {item.status}");
         Console.WriteLine("trade approved!");
+        tradecenter.Remove(item);
+        Console.WriteLine("item deleted from tradecenter");
+        completedtrades.Add(item);
+        Console.WriteLine($"Item added to {item.Owner.Username} completed trades");
         Console.ReadLine();
 
         /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)
