@@ -115,6 +115,7 @@ public class Trade
 
 
         tradecenter[item] = CurrentUser;
+        item.status = TradeStatus.Approved;
         Console.WriteLine("trade approved!");
 
         /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -88,6 +89,7 @@ while (Running)
                 ActiveUser = false;
                 CurrentUser = null;
                 Console.WriteLine("Logging out!");
+
                 break;
 
             case "2": //---------------------------Add Item------------------------------
@@ -134,6 +136,23 @@ while (Running)
                 }
                 else
                 {
+                    int userinputinspectid = Convert.ToInt32(userinputinspect);
+                    foreach (var it in trade.tradecenter)
+                        if (userinputinspectid == it.Key.Id && CurrentUser == it.Key.Owner)
+                        {
+                            Console.WriteLine("1. Accept");
+                            Console.WriteLine("2. Deny");
+                            switch (Console.ReadLine())
+                            {
+                                case "1":
+                                    Console.WriteLine("Accepting Trade!");
+                                    trade.AcceptTradeOffer(it.Key, trade.tradecenter, CurrentUser);
+                                    break;
+                                case "2":
+                                    break;
+                            }
+
+                        }
 
 
 
