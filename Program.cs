@@ -17,6 +17,7 @@ using App;
 // A user needs to be able to accept a trade request.                               !!
 // A user needs to be able to deny a trade request                                  !!
 // A user needs to be able to browse completed requests.                            !!
+
 //Program needs to be able to save trades
 //program needs to be able to save users
 
@@ -24,8 +25,6 @@ using App;
 //List of users and items to store users inputs
 List<User> users = new List<User>();
 List<Item> items = new List<Item>();
-
-
 Trade trade = new Trade();
 
 //Dictionary to store a complete advertisment
@@ -88,12 +87,10 @@ while (Running)
         Console.WriteLine("6. Completed trades");
         switch (Console.ReadLine())
         {
-
             case "1": //---------------------------Logout------------------------------
                 ActiveUser = false;
                 CurrentUser = null;
                 Console.WriteLine("Logging out!");
-
 
                 break;
 
@@ -108,7 +105,6 @@ while (Running)
                 trade.tradecenter.Add(localitem, CurrentUser);
                 break;
 
-
             case "3": //---------------------------Browse Tradecenter------------------------------
                 ////Console.Clear();();();
                 trade.ShowTradecenter(CurrentUser);
@@ -121,7 +117,6 @@ while (Running)
                 }
                 else
                 {
-
                     trade.InspectListingTradecenter(CurrentUser, userinput);
                 }
                 break;
