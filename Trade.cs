@@ -63,16 +63,16 @@ public class Trade
     }
     public void ShowTradeRequests()
     {
-
+        //sent trade offers
     }
-    public void InspectListing(User CurrentUser, string userinput)
+    public void InspectListingTradecenter(User CurrentUser, string userinput)
     {
         int userinputindex = Convert.ToInt32(userinput);
         foreach (var listing in tradecenter)
         {
             if (userinputindex == listing.Key.Id)
             {
-                if (CurrentUser.Username == listing.Value.Username)
+                if (CurrentUser.Username == listing.Key.Owner.Username)
                 {
                     Console.WriteLine("There is no listing with that id!");
                     break;
@@ -125,6 +125,8 @@ public class Trade
 */
 
     }
+
+
 
     public void DenyTradeOffer()
     {

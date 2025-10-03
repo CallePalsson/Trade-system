@@ -10,15 +10,15 @@ using App;
 // A user needs to be able to log in.                                               !!
 // A user needs to be able to upload information about the item they wish to trade. !!
 // A user needs to be able to browse a list of other users items.                   !!
-// A user needs to be able to request a trade for other users items.                !
-
-// A user needs to be able to browse trade requests.
+// A user needs to be able to request a trade for other users items.                !!
+// A user needs to be able to browse trade requests.                                !!
 
 // A user needs to be able to accept a trade request.
 // A user needs to be able to deny a trade request.
 // A user needs to be able to browse completed requests.
 //Program needs to be able to save trades
 //program needs to be able to save users
+
 
 //List of users and items to store users inputs
 List<User> users = new List<User>();
@@ -33,7 +33,7 @@ bool Running = true;
 while (Running)
 {
     bool ActiveUser = false; //ActiveUser false becuase no one is logged in
-
+    Console.Clear();
     //Menu for login options
     Console.WriteLine($"Welcome to tradecenter!\n");
     Console.WriteLine("1. Login");
@@ -42,6 +42,7 @@ while (Running)
     {
         //Asking the user for login information 
         case "1":
+            Console.Clear();
             Console.Write("Enter username: ");
             string? L_username = Console.ReadLine();
             Console.Write("Enter password: ");
@@ -62,6 +63,7 @@ while (Running)
 
             break;
         case "2":
+            Console.Clear();
             Console.Write("Enter username: ");
             string? username = Console.ReadLine();
             Console.Write("Enter password: ");
@@ -69,9 +71,10 @@ while (Running)
             users.Add(new User(username, password));
             break;
     }
+
     while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
     {
-
+        Console.Clear();
         Console.WriteLine($"Logged in as: {CurrentUser.Username}");
         Console.WriteLine("--------------------Tradecenter------------------");
         Console.WriteLine("1. Logout");
@@ -88,15 +91,18 @@ while (Running)
                 break;
 
             case "2": //---------------------------Add Item------------------------------
+                Console.Clear();
+                Console.WriteLine("-------------------Add Item---------------------");
                 Console.Write("What item type of item would you like to add: ");
                 string? item = Console.ReadLine();
                 Console.Write("A short description of that item: ");
                 string? description = Console.ReadLine();
-                Item localitem = new Item(item, description);
+                Item localitem = new Item(item, description, CurrentUser);
                 trade.tradecenter.Add(localitem, CurrentUser);
                 break;
 
             case "3": //---------------------------Browse Tradecenter------------------------------
+                Console.Clear();
                 trade.ShowTradecenter(CurrentUser);
                 Console.WriteLine("Enter the Listing id to inspect:");
                 Console.WriteLine("To quit enter q");
@@ -107,19 +113,36 @@ while (Running)
                 }
                 else
                 {
-                    trade.InspectListing(CurrentUser, userinput);
+                    trade.InspectListingTradecenter(CurrentUser, userinput);
                 }
                 break;
 
             case "4": //---------------------------Browse Own Listings------------------------------
                 trade.ShowUserListing(CurrentUser);
+                Console.ReadLine();
                 break;
-            case "5":
+
+            case "5": //----------------------------Browse Tradeoffers------------------------------
+                Console.Clear();
                 trade.ShowTradeOffer(CurrentUser);
-                Console.WriteLine("Enter id of the item you would want to inspect:");
+                Console.WriteLine("Inspect the request by Entering id: ");
                 Console.WriteLine("q to Exit");
                 string userinputinspect = Console.ReadLine();
-                int userinputinspectid = Convert.ToInt32(userinputinspect);
+                if (userinputinspect == "q")
+                {
+                    break;
+                }
+                else
+                {
+
+
+
+
+                }
+
+
+
+
 
                 break;
         }
