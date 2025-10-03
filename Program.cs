@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -14,9 +15,9 @@ using App;
 // A user needs to be able to request a trade for other users items.                !!
 // A user needs to be able to browse trade requests.                                !!
 
-// A user needs to be able to accept a trade request.
+// A user needs to be able to accept a trade request.                               !!
 // A user needs to be able to deny a trade request.
-// A user needs to be able to browse completed requests.
+// A user needs to be able to browse completed requests.                            !!
 //Program needs to be able to save trades
 //program needs to be able to save users
 
@@ -83,6 +84,7 @@ while (Running)
         Console.WriteLine("3. Browse the tradecenter");
         Console.WriteLine("4. Browse your listings");
         Console.WriteLine("5. Browse trade offers");
+        Console.WriteLine("6. Completed trades");
         switch (Console.ReadLine())
         {
             case "1": //---------------------------Logout------------------------------
@@ -156,13 +158,16 @@ while (Running)
 
 
 
-
+                    break;
                 }
-
-
-
-
-
+            case "6":
+                foreach (var trades in trade.completedtrades)
+                {
+                    if (trades.Owner == CurrentUser || trades.Lastowner == CurrentUser)
+                        Console.WriteLine($"Item: {trades.Name} Currentowner: {trades.Owner.Username} last owner: {trades.Lastowner.Username}");
+                    Console.ReadLine();
+                    break;
+                }
                 break;
         }
 

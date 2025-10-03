@@ -111,7 +111,7 @@ public class Trade
 
         item.status = TradeStatus.Approved;
 
-        User lastowner = item.Owner;
+        item.Lastowner = item.Owner;
         item.Owner = item.TradeRequest;
 
 
@@ -123,7 +123,7 @@ public class Trade
         tradecenter.Remove(item);
         Console.WriteLine("item deleted from tradecenter");
         completedtrades.Add(item);
-        Console.WriteLine($"Item added to {item.Owner.Username} completed trades");
+        Console.WriteLine($"Item added to yours and {item.Owner.Username} completed trades");
         Console.ReadLine();
 
         /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)

@@ -9,6 +9,7 @@ public class Item
     public TradeStatus status;
     public User TradeRequest;
     public User Owner;
+    public User Lastowner;
 
     public Item(string name, string description, User CurrentUser)
     {
