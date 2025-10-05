@@ -35,7 +35,7 @@ bool Running = true;
 while (Running)
 {
     bool ActiveUser = false; //ActiveUser false becuase no one is logged in
-    ////Console.Clear();();();
+    Console.Clear();
     //Menu for login options
     Console.WriteLine($"Welcome to tradecenter!\n");
     Console.WriteLine("1. Login");
@@ -44,7 +44,7 @@ while (Running)
     {
         //Asking the user for login information 
         case "1":
-            ////Console.Clear();();();
+            Console.Clear();
             Console.Write("Enter username: ");
             string? L_username = Console.ReadLine();
             Console.Write("Enter password: ");
@@ -65,7 +65,8 @@ while (Running)
 
             break;
         case "2":
-            ////Console.Clear();();();
+            Console.Clear();
+            Console.WriteLine("----------Create Account---------");
             Console.Write("Enter username: ");
             string? username = Console.ReadLine();
             Console.Write("Enter password: ");
@@ -76,7 +77,7 @@ while (Running)
 
     while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
     {
-        ////Console.Clear();();();
+        Console.Clear();
         Console.WriteLine($"Logged in as: {CurrentUser.Username}");
         Console.WriteLine("--------------------Tradecenter------------------");
         Console.WriteLine("1. Logout");
@@ -95,7 +96,7 @@ while (Running)
                 break;
 
             case "2": //---------------------------Add Item------------------------------
-                ////Console.Clear();();();
+                Console.Clear();
                 Console.WriteLine("-------------------Add Item---------------------");
                 Console.Write("What item type of item would you like to add: ");
                 string? item = Console.ReadLine();
@@ -106,66 +107,86 @@ while (Running)
                 break;
 
             case "3": //---------------------------Browse Tradecenter------------------------------
-                ////Console.Clear();();();
+                Console.Clear();
                 trade.ShowTradecenter(CurrentUser);
                 Console.WriteLine("Enter the Listing id to inspect:");
                 Console.WriteLine("To quit enter q");
                 string userinput = Console.ReadLine();
-                if (userinput == "q")
+                try
                 {
-                    break;
+                    if (userinput == "q")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        trade.InspectListingTradecenter(CurrentUser, userinput);
+                    }
                 }
-                else
+                catch
                 {
-                    trade.InspectListingTradecenter(CurrentUser, userinput);
+                    Console.WriteLine("Invalid input");
                 }
+            
                 break;
 
             case "4": //---------------------------Browse Own Listings------------------------------
+                Console.Clear();
                 trade.ShowUserListing(CurrentUser);
                 Console.ReadLine();
                 break;
 
             case "5": //----------------------------Browse Tradeoffers------------------------------
-                ////Console.Clear();();();
+                Console.Clear();
                 trade.ShowTradeOffer(CurrentUser);
                 Console.WriteLine("Inspect the request by Entering id: ");
                 Console.WriteLine("q to Exit");
                 string userinputinspect = Console.ReadLine();
-                if (userinputinspect == "q")
+                try
                 {
-                    break;
-                }
-                else
-                {
-                    int userinputinspectid = Convert.ToInt32(userinputinspect);
-                    foreach (var it in trade.tradecenter)
-                        if (userinputinspectid == it.Key.Id && CurrentUser == it.Key.Owner)
-                        {
-                            Console.WriteLine("1. Accept");
-                            Console.WriteLine("2. Deny");
-                            switch (Console.ReadLine())
+                    if (userinputinspect == "q")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        int userinputinspectid = Convert.ToInt32(userinputinspect);
+                        foreach (var it in trade.tradecenter)
+                            if (userinputinspectid == it.Key.Id && CurrentUser == it.Key.Owner)
                             {
-                                case "1":
-                                    Console.WriteLine("Accepting Trade!");
-                                    trade.AcceptTradeOffer(it.Key, trade.tradecenter);
-                                    break;
-                                case "2":
-                                    trade.DenyTradeOffer(it.Key);
-                                    break;
+                                Console.WriteLine("1. Accept");
+                                Console.WriteLine("2. Deny");
+                                switch (Console.ReadLine())
+                                {
+                                    case "1":
+                                        Console.WriteLine("Accepting Trade!");
+                                        trade.AcceptTradeOffer(it.Key, trade.tradecenter);
+                                        break;
+                                    case "2":
+                                        trade.DenyTradeOffer(it.Key);
+                                        break;
+                                }
+
                             }
-
-                        }
-
-
-
-                    break;
+                            else
+                            {
+                                Console.WriteLine("There is no request with that id!");
+                                break;
+                            }
+                    }
                 }
+                catch
+                {
+                    Console.WriteLine("Invalid input");
+                }
+                break;
+
             case "6":
+                Console.Clear();
                 foreach (var trades in trade.completedtrades)
                 {
                     if (trades.Owner == CurrentUser || trades.Lastowner == CurrentUser)
-                        Console.WriteLine($"Item: ({trades.Name}) Trader: {trades.Owner.Username} Requested by: {trades.TradeRequest.Username}  ({trades.status})");
+                        Console.WriteLine($"Item: ({trades.Name}) Trader: {trades.Lastowner.Username} Requested by: {trades.TradeRequest.Username}  ({trades.status})");
                     Console.ReadLine();
                     break;
                 }

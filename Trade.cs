@@ -7,16 +7,12 @@ namespace App;
 public class Trade
 {
 
+
     public Dictionary<Item, User> tradecenter = new Dictionary<Item, User>();
     public List<Item> completedtrades = new List<Item>();
 
 
-    public void TradecenterAdd(Item item, User user)
-    {
-        tradecenter.Add(item, user);
-    }
     //browse tradecenter 
-
     public void ShowTradecenter(User CurrentUser)
     {
 
@@ -40,7 +36,7 @@ public class Trade
         foreach (var listing in tradecenter)
             if (CurrentUser == listing.Key.Owner)
             {
-                Console.WriteLine($"Listing Id: {listing.Key.Id}  Item: {listing.Key.Name} Trader: {listing.Key.Owner.Username} ");
+                Console.WriteLine($"Listing Id: {listing.Key.Id}  Item: ({listing.Key.Name}) Description: {listing.Key.Description} ");
             }
             else
             {
@@ -106,6 +102,7 @@ public class Trade
         Console.WriteLine("Trade offer sent!");
         item.status = TradeStatus.Requested;
         item.TradeRequest = CurrentUser;
+        Console.ReadLine();
     }
 
     public void AcceptTradeOffer(Item item, Dictionary<Item, User> tradecenter)
