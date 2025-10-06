@@ -29,15 +29,27 @@ Trade trade = new Trade();
 Filemanager fm = new Filemanager();
 
 fm.LoadUsers(users);
+bool ActiveUser = false; //ActiveUser false becuase no one is logged in
+User? CurrentUser = null;
+
+// looping thru saved users if a user is logged in then it opens as logged in
+for (int i = 0; i < users.Count; i++)
+{
+    if (users[i].IsLoggedIn)
+    {
+        CurrentUser = users[i];
+        ActiveUser = true;
+    }
+}
 
 //Dictionary to store a complete advertisment
-User? CurrentUser = null;
+
 users.Add(new User("a", "a", false));
 bool Running = true;
 
 while (Running)
 {
-    bool ActiveUser = false; //ActiveUser false becuase no one is logged in
+
     Console.Clear();
     //Menu for login options
     Console.WriteLine($"Welcome to tradecenter!\n");
@@ -61,7 +73,8 @@ while (Running)
                 {
                     ActiveUser = true;
                     CurrentUser = user;
-                    user.IsLoggedIn = true;
+                    bool isloggedin = true;
+                    fm.UpdateUser(users, L_username, L_password, isloggedin, CurrentUser);
                     break;
                 }
 
@@ -84,7 +97,7 @@ while (Running)
 
     while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
     {
-        fm.Showtxt();
+        fm.ShowUserFile();
         //Console.Clear();
         Console.WriteLine($"Logged in as: {CurrentUser.Username}");
         Console.WriteLine("--------------------Tradecenter------------------");
@@ -98,9 +111,10 @@ while (Running)
         {
             case "1": //---------------------------Logout------------------------------
                 ActiveUser = false;
-                CurrentUser = null;
+                bool isloggedin = false;
+                fm.UpdateUser(users, CurrentUser.Username, CurrentUser.Password, isloggedin, CurrentUser);
                 Console.WriteLine("Logging out!");
-
+                CurrentUser = null;
                 break;
 
             case "2": //---------------------------Add Item------------------------------

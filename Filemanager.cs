@@ -37,13 +37,36 @@ public class Filemanager
         }
         File.WriteAllLines(Userfile, linestowrite.ToArray());
     }
-    public void Showtxt()
+    public void ShowUserFile()
     {
         string[] userlines = File.ReadAllLines(Userfile);
         foreach (string line in userlines)
         {
             Console.WriteLine(line);
         }
+    }
+    public void UpdateUser(List<User> users, string username, string password, bool isloggedin, User CurrentUser)
+    {
+        bool UserFound = false;
+        for (int i = 0; i < users.Count; i++)
+        {
+            if (users[i].Username == username && users[i].Password == password || users[i].Username == CurrentUser.Username && users[i].Password == CurrentUser.Password)
+            {
+                users[i].IsLoggedIn = isloggedin;
+                UserFound = true;
+                Console.WriteLine($"user {username} updated!");
+                break;
+            }
+        }
+        if (UserFound)
+        {
+            SaveUsers(users);
+        }
+        else
+        {
+            Console.WriteLine("no user to update!");
+        }
+
     }
 
 }
