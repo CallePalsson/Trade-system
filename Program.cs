@@ -28,8 +28,14 @@ List<Item> items = new List<Item>();
 Trade trade = new Trade();
 Filemanager fm = new Filemanager();
 
+//Loading users
 fm.LoadUsers(users);
+fm.LoadCompletedTrades(trade.completedtrades, users);
+
+
 bool ActiveUser = false; //ActiveUser false becuase no one is logged in
+
+//CurrentUser set to null 
 User? CurrentUser = null;
 
 // looping thru saved users if a user is logged in then it opens as logged in
@@ -42,9 +48,7 @@ for (int i = 0; i < users.Count; i++)
     }
 }
 
-//Dictionary to store a complete advertisment
-
-users.Add(new User("a", "a", false));
+//users.Add(new User("a", "a", false));
 bool Running = true;
 
 while (Running)
@@ -197,9 +201,11 @@ while (Running)
                                         case "1":
                                             Console.WriteLine("Accepting Trade!");
                                             trade.AcceptTradeOffer(it.Key, trade.tradecenter);
+                                            fm.SaveCompletedTrades(trade.completedtrades);
                                             break;
                                         case "2":
                                             trade.DenyTradeOffer(it.Key);
+                                            fm.SaveCompletedTrades(trade.completedtrades);
                                             break;
                                     }
 
@@ -221,11 +227,12 @@ while (Running)
                     Console.Clear();
                     foreach (var trades in trade.completedtrades)
                     {
-                        if (trades.Owner == CurrentUser || trades.Lastowner == CurrentUser)
+                        if (trades.Owner.Username == CurrentUser.Username || trades.Lastowner.Username == CurrentUser.Username)
                             Console.WriteLine($"Item: ({trades.Name}) Trader: {trades.Lastowner.Username} Requested by: {trades.TradeRequest.Username}  ({trades.status})");
-                        Console.ReadLine();
-                        break;
+
+
                     }
+                    Console.ReadLine();
                     break;
             }
 

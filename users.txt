@@ -1,6 +1,0 @@
-a,a,False
-calle,c,True
-a,a,False
-a,a,False
-a,a,False
-a,a,False
