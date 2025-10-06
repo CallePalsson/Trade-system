@@ -89,9 +89,18 @@ while (Running)
             string? username = Console.ReadLine();
             Console.Write("Enter password: ");
             string? password = Console.ReadLine();
-            users.Add(new User(username, password, false));
-            Console.WriteLine($"{username} has been created!");
-            fm.SaveUsers(users);
+            if (fm.CheckDuplicates(users, username, password))
+            {
+                Console.WriteLine("User already exist");
+                Console.ReadLine();
+                break;
+            }
+            else
+            {
+                users.Add(new User(username, password, false));
+                Console.WriteLine($"{username} has been created!");
+                fm.SaveUsers(users);
+            }
             break;
     }
 

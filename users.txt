@@ -1,4 +1,2 @@
+a,a,False
 calle,c,True
-calle,c,False
-calle,c,False
-calle,c,False

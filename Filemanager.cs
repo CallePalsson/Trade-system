@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 namespace App;
 
 public class Filemanager
@@ -67,6 +69,18 @@ public class Filemanager
             Console.WriteLine("no user to update!");
         }
 
+    }
+    public bool CheckDuplicates(List<User> users, string username, string password)
+    {
+        for (int i = 0; i < users.Count; i++)
+        {
+            if (users[i].Username == username && users[i].Password == password)
+            {
+                return true;
+            }
+
+        }
+        return false;
     }
 
 }
