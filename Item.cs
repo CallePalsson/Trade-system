@@ -11,6 +11,7 @@ public class Item
     public User Owner;
     public User Lastowner;
 
+    //constructor
     public Item(string name, string description, User CurrentUser)
     {
         Id = IdCount++;
@@ -19,14 +20,11 @@ public class Item
         Owner = CurrentUser;
 
     }
+    //isnt used checks if the user is the owner of a item
     public bool IsOwner(User user)
     {
         return Owner == user;
     }
-    // public static void ShowItem(string Name,int Id,TradeStatus status)
-    // {
-    //     Console.WriteLine($"Id: ({Id}) Item: ({Name}) Status: ({status})");
-    // }
 }
 
 

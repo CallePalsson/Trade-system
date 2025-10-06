@@ -18,6 +18,7 @@ public class Trade
 
 
         Console.WriteLine("----------------Tradecenter-------------------");
+        //loops thru tradecenter
         foreach (var listings in tradecenter)
         {
             if (CurrentUser.Username == listings.Value.Username)
@@ -33,6 +34,7 @@ public class Trade
     public void ShowUserListing(User CurrentUser)
     {
         Console.WriteLine("----------------Your Listings-------------------");
+        //loops thru your listings
         foreach (var listing in tradecenter)
             if (CurrentUser == listing.Key.Owner)
             {
@@ -46,6 +48,7 @@ public class Trade
     public void ShowTradeOffer(User CurrentUser)
     {
         Console.WriteLine("----------------Trade Offers-------------------");
+        //loops thru trade offers
         foreach (var listing in tradecenter)
         {
 
@@ -60,20 +63,25 @@ public class Trade
             }
         }
     }
+
     public void InspectListingTradecenter(User CurrentUser, string userinput)
     {
+        //converts input to int for choosing id
         int userinputindex = Convert.ToInt32(userinput);
         foreach (var listing in tradecenter)
         {
+            //looking for id with input
             if (userinputindex == listing.Key.Id)
             {
+                //Checks if currentuser is the owner
                 if (CurrentUser.Username == listing.Key.Owner.Username)
                 {
+                    //if it is then this
                     Console.WriteLine("There is no listing with that id!");
                     break;
                 }
                 else
-                {
+                { // else writes out info
                     Console.WriteLine($"({listing.Key.Name})");
                     Console.WriteLine($"Descritpion\n{listing.Key.Description}");
                     Console.WriteLine("\n\n1.Send trade offer\n2.Back");
@@ -96,38 +104,38 @@ public class Trade
     public void SendTradeOffer(Item item, User CurrentUser)
     {
         Console.WriteLine("Trade offer sent!");
+
+        //sets status to requested
         item.status = TradeStatus.Requested;
+
+        //sets traderequest slot to current user
         item.TradeRequest = CurrentUser;
         Console.ReadLine();
     }
 
     public void AcceptTradeOffer(Item item, Dictionary<Item, User> tradecenter)
     {
-        //Console.WriteLine("Trade offer Accepted!");
-
+        //sets status to approved
         item.status = TradeStatus.Approved;
 
+        //sets owner to last owner
         item.Lastowner = item.Owner;
+
+        //sets the requester to owner
         item.Owner = item.TradeRequest;
 
 
-
+        //sets the user in tradecenter to its owner
         tradecenter[item] = item.Owner;
-        item.status = TradeStatus.Approved;
-        //Console.WriteLine($"{item.Owner.Username} + {item.Name} + {item.TradeRequest.Username} + {item.status}");
         Console.WriteLine("trade approved!");
+
+        //removes item from tradecenter
         tradecenter.Remove(item);
         Console.WriteLine("item deleted from tradecenter");
+
+        //adds item to completed trades history
         completedtrades.Add(item);
         Console.WriteLine($"Item added to yours and {item.Owner.Username} trades history");
-        Console.ReadLine();
-
-        /*if (item.status == TradeStatus.Approved && CurrentUser.Username == item.TradeRequest && localid == id)
-        {
-            item.Username = CurrentUser.Username;
-            Console.WriteLine("Trade Approved");
-        }
-*/
 
     }
 
@@ -135,6 +143,7 @@ public class Trade
 
     public void DenyTradeOffer(Item item)
     {
+        //sets status to denied dosent do anything becuase it goes to waiting right after
         item.status = TradeStatus.Denied;
         Console.WriteLine("Trade offer denied and will be put up on tradecenter again!");
         item.status = TradeStatus.Waiting;
