@@ -1,0 +1,6 @@
+a,a,True
+calle,c,False
+a,a,False
+l,l,False
+a,a,False
+calle,c,False

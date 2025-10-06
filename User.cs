@@ -5,22 +5,32 @@ namespace App;
 public class User
 {
     public string Username;
-    string Password;
+    public string Password;
+    public bool IsLoggedIn;
 
-    public User(string username, string password)
+    public User(string username, string password, bool isloggedin)
     {
         Username = username;
         Password = password;
+        IsLoggedIn = isloggedin;
     }
     public bool Trylogin(string username, string password)
     {
-        return username == Username && password == Password;
+        if (username == Username && password == Password)
+        {
+            IsLoggedIn = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
 
     }
-    public void Logout(bool ActiveUser, User CurrentUser)
+    public void Logout()
     {
-        ActiveUser = false;
-        CurrentUser = null;
-        Console.WriteLine("Logging out!");
+        IsLoggedIn = false;
+        Console.WriteLine($"{Username} logging out!");
     }
 }

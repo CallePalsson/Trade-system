@@ -60,10 +60,6 @@ public class Trade
             }
         }
     }
-    public void ShowTradeRequests()
-    {
-        //sent trade offers
-    }
     public void InspectListingTradecenter(User CurrentUser, string userinput)
     {
         int userinputindex = Convert.ToInt32(userinput);
@@ -118,7 +114,7 @@ public class Trade
 
         tradecenter[item] = item.Owner;
         item.status = TradeStatus.Approved;
-        Console.WriteLine($"{item.Owner.Username} + {item.Name} + {item.TradeRequest.Username} + {item.status}");
+        //Console.WriteLine($"{item.Owner.Username} + {item.Name} + {item.TradeRequest.Username} + {item.status}");
         Console.WriteLine("trade approved!");
         tradecenter.Remove(item);
         Console.WriteLine("item deleted from tradecenter");

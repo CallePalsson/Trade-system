@@ -26,10 +26,13 @@ using App;
 List<User> users = new List<User>();
 List<Item> items = new List<Item>();
 Trade trade = new Trade();
+Filemanager fm = new Filemanager();
+
+fm.LoadUsers(users);
 
 //Dictionary to store a complete advertisment
 User? CurrentUser = null;
-users.Add(new User("a", "a"));
+users.Add(new User("a", "a", false));
 bool Running = true;
 
 while (Running)
@@ -58,10 +61,12 @@ while (Running)
                 {
                     ActiveUser = true;
                     CurrentUser = user;
+                    user.IsLoggedIn = true;
                     break;
                 }
 
             }
+
 
             break;
         case "2":
@@ -71,13 +76,16 @@ while (Running)
             string? username = Console.ReadLine();
             Console.Write("Enter password: ");
             string? password = Console.ReadLine();
-            users.Add(new User(username, password));
+            users.Add(new User(username, password, false));
+            Console.WriteLine($"{username} has been created!");
+            fm.SaveUsers(users);
             break;
     }
 
     while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
     {
-        Console.Clear();
+        fm.Showtxt();
+        //Console.Clear();
         Console.WriteLine($"Logged in as: {CurrentUser.Username}");
         Console.WriteLine("--------------------Tradecenter------------------");
         Console.WriteLine("1. Logout");
@@ -127,7 +135,7 @@ while (Running)
                 {
                     Console.WriteLine("Invalid input");
                 }
-            
+
                 break;
 
             case "4": //---------------------------Browse Own Listings------------------------------
