@@ -1,6 +1,6 @@
-#Tradecenter 
+# Tradecenter 
 
-##tradecenter## är em konsolbaserad C# applikation som låter användaren lägga upp items och ta emot bytesförslag, applikationen låter dig skapa konto, logga in, bläddra i andras föremål och skicka bytesföreslag, acceptera bytesförslag samt avslå byten.
+**tradecenter** är en konsolbaserad C# applikation som låter användaren lägga upp items och ta emot bytesförslag, applikationen låter dig skapa konto, logga in, bläddra i andras föremål och skicka bytesföreslag, acceptera bytesförslag samt avslå byten.
 
 ## Funktioner
 
