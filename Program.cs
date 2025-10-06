@@ -49,182 +49,187 @@ bool Running = true;
 
 while (Running)
 {
-
-    Console.Clear();
-    //Menu for login options
-    Console.WriteLine($"Welcome to tradecenter!\n");
-    Console.WriteLine("1. Login");
-    Console.WriteLine("2. Create a account");
-    switch (Console.ReadLine())
+    if (!ActiveUser)
     {
-        //Asking the user for login information 
-        case "1":
-            Console.Clear();
-            Console.Write("Enter username: ");
-            string? L_username = Console.ReadLine();
-            Console.Write("Enter password: ");
-            string? L_password = Console.ReadLine();
-
-            //Looping through users list and checking if there is a user with the users inputs
-            foreach (var user in users)
-            {
-
-                if (user.Trylogin(L_username, L_password) == true)
-                {
-                    ActiveUser = true;
-                    CurrentUser = user;
-                    bool isloggedin = true;
-                    fm.UpdateUser(users, L_username, L_password, isloggedin, CurrentUser);
-                    break;
-                }
-
-            }
-
-
-            break;
-        case "2":
-            Console.Clear();
-            Console.WriteLine("----------Create Account---------");
-            Console.Write("Enter username: ");
-            string? username = Console.ReadLine();
-            Console.Write("Enter password: ");
-            string? password = Console.ReadLine();
-            if (fm.CheckDuplicates(users, username, password))
-            {
-                Console.WriteLine("User already exist");
-                Console.ReadLine();
-                break;
-            }
-            else
-            {
-                users.Add(new User(username, password, false));
-                Console.WriteLine($"{username} has been created!");
-                fm.SaveUsers(users);
-            }
-            break;
-    }
-
-    while (ActiveUser) //-----------------------------------Logged in--------------------------------------//
-    {
-        fm.ShowUserFile();
-        //Console.Clear();
-        Console.WriteLine($"Logged in as: {CurrentUser.Username}");
-        Console.WriteLine("--------------------Tradecenter------------------");
-        Console.WriteLine("1. Logout");
-        Console.WriteLine("2. Add a item to tradecenter");
-        Console.WriteLine("3. Browse the tradecenter");
-        Console.WriteLine("4. Browse your listings");
-        Console.WriteLine("5. Browse trade offers");
-        Console.WriteLine("6. Completed trades");
+        Console.Clear();
+        //Menu for login options
+        Console.WriteLine($"Welcome to tradecenter!\n");
+        Console.WriteLine("1. Login");
+        Console.WriteLine("2. Create a account");
         switch (Console.ReadLine())
         {
-            case "1": //---------------------------Logout------------------------------
-                ActiveUser = false;
-                bool isloggedin = false;
-                fm.UpdateUser(users, CurrentUser.Username, CurrentUser.Password, isloggedin, CurrentUser);
-                Console.WriteLine("Logging out!");
-                CurrentUser = null;
-                break;
-
-            case "2": //---------------------------Add Item------------------------------
+            //Asking the user for login information 
+            case "1": //----------------------------Login Menu----------------------------
                 Console.Clear();
-                Console.WriteLine("-------------------Add Item---------------------");
-                Console.Write("What item type of item would you like to add: ");
-                string? item = Console.ReadLine();
-                Console.Write("A short description of that item: ");
-                string? description = Console.ReadLine();
-                Item localitem = new Item(item, description, CurrentUser);
-                trade.tradecenter.Add(localitem, CurrentUser);
-                break;
+                Console.WriteLine("-------------------Login Menu---------------------");
+                Console.Write("Enter username: ");
+                string? L_username = Console.ReadLine();
+                Console.Write("Enter password: ");
+                string? L_password = Console.ReadLine();
 
-            case "3": //---------------------------Browse Tradecenter------------------------------
-                Console.Clear();
-                trade.ShowTradecenter(CurrentUser);
-                Console.WriteLine("Enter the Listing id to inspect:");
-                Console.WriteLine("To quit enter q");
-                string userinput = Console.ReadLine();
-                try
+                //Looping through users list and checking if there is a user with the users inputs
+                foreach (var user in users)
                 {
-                    if (userinput == "q")
+
+                    if (user.Trylogin(L_username, L_password) == true)
                     {
+                        ActiveUser = true;
+                        CurrentUser = user;
+                        bool isloggedin = true;
+                        fm.UpdateUser(users, L_username, L_password, isloggedin, CurrentUser);
                         break;
                     }
-                    else
-                    {
-                        trade.InspectListingTradecenter(CurrentUser, userinput);
-                    }
+
                 }
-                catch
-                {
-                    Console.WriteLine("Invalid input");
-                }
+
 
                 break;
-
-            case "4": //---------------------------Browse Own Listings------------------------------
+            case "2":
                 Console.Clear();
-                trade.ShowUserListing(CurrentUser);
-                Console.ReadLine();
-                break;
-
-            case "5": //----------------------------Browse Tradeoffers------------------------------
-                Console.Clear();
-                trade.ShowTradeOffer(CurrentUser);
-                Console.WriteLine("Inspect the request by Entering id: ");
-                Console.WriteLine("q to Exit");
-                string userinputinspect = Console.ReadLine();
-                try
+                Console.WriteLine("----------Create Account---------");
+                Console.Write("Enter username: ");
+                string? username = Console.ReadLine();
+                Console.Write("Enter password: ");
+                string? password = Console.ReadLine();
+                if (fm.CheckDuplicates(users, username, password))
                 {
-                    if (userinputinspect == "q")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        int userinputinspectid = Convert.ToInt32(userinputinspect);
-                        foreach (var it in trade.tradecenter)
-                            if (userinputinspectid == it.Key.Id && CurrentUser == it.Key.Owner)
-                            {
-                                Console.WriteLine("1. Accept");
-                                Console.WriteLine("2. Deny");
-                                switch (Console.ReadLine())
-                                {
-                                    case "1":
-                                        Console.WriteLine("Accepting Trade!");
-                                        trade.AcceptTradeOffer(it.Key, trade.tradecenter);
-                                        break;
-                                    case "2":
-                                        trade.DenyTradeOffer(it.Key);
-                                        break;
-                                }
-
-                            }
-                            else
-                            {
-                                Console.WriteLine("There is no request with that id!");
-                                break;
-                            }
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine("Invalid input");
-                }
-                break;
-
-            case "6":
-                Console.Clear();
-                foreach (var trades in trade.completedtrades)
-                {
-                    if (trades.Owner == CurrentUser || trades.Lastowner == CurrentUser)
-                        Console.WriteLine($"Item: ({trades.Name}) Trader: {trades.Lastowner.Username} Requested by: {trades.TradeRequest.Username}  ({trades.status})");
+                    Console.WriteLine("User already exist");
                     Console.ReadLine();
                     break;
+                }
+                else
+                {
+                    users.Add(new User(username, password, false));
+                    Console.WriteLine($"{username} has been created!");
+                    fm.SaveUsers(users);
                 }
                 break;
         }
 
     }
+    else
+    {
+        //-----------------------------------Logged in--------------------------------------//
+        {
+            Console.Clear();
+            fm.ShowUserFile();
+            Console.WriteLine($"Logged in as: {CurrentUser.Username}");
+            Console.WriteLine("--------------------Tradecenter------------------");
+            Console.WriteLine("1. Logout");
+            Console.WriteLine("2. Add a item to tradecenter");
+            Console.WriteLine("3. Browse the tradecenter");
+            Console.WriteLine("4. Browse your listings");
+            Console.WriteLine("5. Browse trade offers");
+            Console.WriteLine("6. Completed trades");
+            switch (Console.ReadLine())
+            {
+                case "1": //---------------------------Logout------------------------------
+                    ActiveUser = false;
+                    bool isloggedin = false;
+                    fm.UpdateUser(users, CurrentUser.Username, CurrentUser.Password, isloggedin, CurrentUser);
+                    Console.WriteLine("Logging out!");
+                    CurrentUser = null;
+                    break;
 
+                case "2": //---------------------------Add Item------------------------------
+                    Console.Clear();
+                    Console.WriteLine("-------------------Add Item---------------------");
+                    Console.Write("What item type of item would you like to add: ");
+                    string? item = Console.ReadLine();
+                    Console.Write("A short description of that item: ");
+                    string? description = Console.ReadLine();
+                    Item localitem = new Item(item, description, CurrentUser);
+                    trade.tradecenter.Add(localitem, CurrentUser);
+                    break;
+
+                case "3": //---------------------------Browse Tradecenter------------------------------
+                    Console.Clear();
+                    trade.ShowTradecenter(CurrentUser);
+                    Console.WriteLine("Enter the Listing id to inspect:");
+                    Console.WriteLine("To quit enter q");
+                    string userinput = Console.ReadLine();
+                    try
+                    {
+                        if (userinput == "q")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            trade.InspectListingTradecenter(CurrentUser, userinput);
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid input");
+                    }
+
+                    break;
+
+                case "4": //---------------------------Browse Own Listings------------------------------
+                    Console.Clear();
+                    trade.ShowUserListing(CurrentUser);
+                    Console.ReadLine();
+                    break;
+
+                case "5": //----------------------------Browse Tradeoffers------------------------------
+                    Console.Clear();
+                    trade.ShowTradeOffer(CurrentUser);
+                    Console.WriteLine("Inspect the request by Entering id: ");
+                    Console.WriteLine("q to Exit");
+                    string userinputinspect = Console.ReadLine();
+                    try
+                    {
+                        if (userinputinspect == "q")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            int userinputinspectid = Convert.ToInt32(userinputinspect);
+                            foreach (var it in trade.tradecenter)
+                                if (userinputinspectid == it.Key.Id && CurrentUser == it.Key.Owner)
+                                {
+                                    Console.WriteLine("1. Accept");
+                                    Console.WriteLine("2. Deny");
+                                    switch (Console.ReadLine())
+                                    {
+                                        case "1":
+                                            Console.WriteLine("Accepting Trade!");
+                                            trade.AcceptTradeOffer(it.Key, trade.tradecenter);
+                                            break;
+                                        case "2":
+                                            trade.DenyTradeOffer(it.Key);
+                                            break;
+                                    }
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine("There is no request with that id!");
+                                    break;
+                                }
+                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid input");
+                    }
+                    break;
+
+                case "6":
+                    Console.Clear();
+                    foreach (var trades in trade.completedtrades)
+                    {
+                        if (trades.Owner == CurrentUser || trades.Lastowner == CurrentUser)
+                            Console.WriteLine($"Item: ({trades.Name}) Trader: {trades.Lastowner.Username} Requested by: {trades.TradeRequest.Username}  ({trades.status})");
+                        Console.ReadLine();
+                        break;
+                    }
+                    break;
+            }
+
+        }
+
+    }
 }
-
